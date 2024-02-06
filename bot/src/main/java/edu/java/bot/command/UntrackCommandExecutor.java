@@ -8,9 +8,9 @@ import static edu.java.bot.command.Command.UNTRACK;
 public class UntrackCommandExecutor extends CommandExecutor {
 
     @Override
-    protected SendMessage check(String command, long chatId) {
+    protected SendMessage execute(String command, long chatId) {
         if (!command.equals(UNTRACK.getCommandName())) {
-            return checkNext(command, chatId);
+            return executeNext(command, chatId);
         }
         log.info("Command /untrack has executed");
         return new SendMessage(chatId, "test");

@@ -11,12 +11,12 @@ public class StartCommandExecutor extends CommandExecutor {
     private static final String WELCOME_MESSAGE = """
         <b>Привет! 😊</b>
         Это бот для отслеживания изменений на GitHub и StackOverFlow. 🚀
-        Выбери команду:""";
+        Справка по командам - /help""";
 
     @Override
-    protected SendMessage check(String command, long chatId) {
+    protected SendMessage execute(String command, long chatId) {
         if (!command.equals(START.getCommandName())) {
-            return checkNext(command, chatId);
+            return executeNext(command, chatId);
         }
         log.info("Command /start has executed");
         return new SendMessage(chatId, WELCOME_MESSAGE).parseMode(ParseMode.HTML);

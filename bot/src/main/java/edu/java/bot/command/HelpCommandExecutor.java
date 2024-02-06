@@ -25,9 +25,9 @@ public class HelpCommandExecutor extends CommandExecutor {
     );
 
     @Override
-    protected SendMessage check(String command, long chatId) {
+    protected SendMessage execute(String command, long chatId) {
         if (!command.equals(HELP.getCommandName())) {
-            return checkNext(command, chatId);
+            return executeNext(command, chatId);
         }
         log.info("Command /help has executed");
         return new SendMessage(chatId, HELP_MESSAGE).parseMode(ParseMode.HTML);

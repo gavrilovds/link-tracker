@@ -2,7 +2,11 @@ package edu.java.bot.command;
 
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
+@Component
 public abstract class CommandExecutor {
 
     private static final String ERROR_MESSAGE = """
@@ -21,12 +25,12 @@ public abstract class CommandExecutor {
         return first;
     }
 
-    protected abstract SendMessage check(String command, long chatId);
+    protected abstract SendMessage execute(String command, long chatId);
 
-    protected SendMessage checkNext(String command, long chatId) {
+    protected SendMessage executeNext(String command, long chatId) {
         if (next == null) {
             return new SendMessage(chatId, ERROR_MESSAGE).parseMode(ParseMode.HTML);
         }
-        return next.check(command, chatId);
+        return next.execute(command, chatId);
     }
 }

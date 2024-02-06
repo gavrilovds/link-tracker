@@ -11,6 +11,7 @@ public class LinkService {
             "https://github.com/sanyarnd/tinkoff-java-course-2023/",
             "https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c"
         );
+        /*return Collections.emptyList();*/
     }
 
     public void trackLink(long chatId, String link) {

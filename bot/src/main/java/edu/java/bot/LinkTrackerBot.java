@@ -6,7 +6,9 @@ import com.pengrad.telegrambot.model.BotCommand;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
-import edu.java.bot.command.CommandChain;
+import com.pengrad.telegrambot.response.SendResponse;
+import edu.java.bot.update_resolver.MessageUpdateResolver;
+import edu.java.bot.update_resolver.UpdateResolver;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -26,11 +28,10 @@ public class LinkTrackerBot extends TelegramBot {
         new BotCommand(HELP.getCommandName(), HELP.getCommandDescription())
     };
 
-    private final CommandChain commandChain;
+    private final UpdateResolver updateResolver = UpdateResolver.link(new MessageUpdateResolver());
 
-    public LinkTrackerBot(@Value("${app.telegram-token}") String botToken, CommandChain commandChain) {
+    public LinkTrackerBot(@Value("${app.telegram-token}") String botToken) {
         super(botToken);
-        this.commandChain = commandChain;
         initBot();
     }
 
@@ -38,17 +39,15 @@ public class LinkTrackerBot extends TelegramBot {
         execute(new SetMyCommands(commands));
         setUpdatesListener(updates -> {
             for (Update update : updates) {
-                log.info("A message \"{}\" has been received", update.message().text());
                 processUpdate(update);
             }
             return UpdatesListener.CONFIRMED_UPDATES_ALL;
         });
-
     }
 
     private void processUpdate(Update update) {
-        long chatId = update.message().chat().id();
-        SendMessage toSend = commandChain.parseCommand(update.message().text(), chatId);
-        execute(toSend);
+        SendMessage message = updateResolver.resolve(update);
+        SendResponse response = execute(message);
+        log.info("Response is Ok: {}", response.isOk());
     }
 }

@@ -16,11 +16,11 @@ public class CommandChain {
         new UntrackCommandExecutor()
     );
 
-    public SendMessage parseCommand(String command, long chatId) {
+    public SendMessage executeCommand(String command, long chatId) {
         if (command == null) {
             log.info("Null message has been received");
             return new SendMessage(chatId, "Для отправки доступен только текст!");
         }
-        return parser.check(command, chatId);
+        return parser.execute(command, chatId);
     }
 }

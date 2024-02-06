@@ -8,9 +8,9 @@ import static edu.java.bot.command.Command.TRACK;
 public class TrackCommandExecutor extends CommandExecutor {
 
     @Override
-    protected SendMessage check(String command, long chatId) {
+    protected SendMessage execute(String command, long chatId) {
         if (!command.equals(TRACK.getCommandName())) {
-            return checkNext(command, chatId);
+            return executeNext(command, chatId);
         }
         log.info("Command /track has executed");
         return new SendMessage(chatId, "test");
