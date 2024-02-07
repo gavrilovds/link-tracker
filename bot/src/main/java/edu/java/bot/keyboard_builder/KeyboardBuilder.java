@@ -22,7 +22,7 @@ public class KeyboardBuilder {
     public static Keyboard buildCallbackKeyboard(List<Link> links) {
         return new InlineKeyboardMarkup(
             links.stream()
-                .map(link -> new InlineKeyboardButton(link.link()).callbackData("/untrack" + link.id()))
+                .map(link -> new InlineKeyboardButton(link.link()).callbackData("/untrack:" + link.linkId()))
                 .map(button -> new InlineKeyboardButton[] {button})
                 .toArray(InlineKeyboardButton[][]::new)
         );

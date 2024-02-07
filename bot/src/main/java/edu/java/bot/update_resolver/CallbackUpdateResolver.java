@@ -15,6 +15,6 @@ public class CallbackUpdateResolver extends UpdateResolver {
         if (update.callbackQuery() == null) {
             return resolveNext(update);
         }
-        return new SendMessage(update.message().chat().id(), "callback");
+        return new SendMessage(update.callbackQuery().from().id(), update.callbackQuery().data());
     }
 }

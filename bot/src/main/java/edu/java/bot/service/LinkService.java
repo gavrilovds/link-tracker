@@ -26,7 +26,7 @@ public class LinkService {
         // TO DO
     }
 
-    public void untrackLink(long chatId, String link) {
+    public void untrackLink(long chatId, UUID linkId) {
         // TO DO
     }
 }
