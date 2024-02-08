@@ -14,6 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static edu.java.bot.command.Command.UNTRACK;
+import static edu.java.bot.util.MessagesUtils.CHOOSE_LINK_TO_UNTRACK;
+import static edu.java.bot.util.MessagesUtils.NO_TRACKED_LINKS;
 
 @ExtendWith(MockitoExtension.class)
 public class UntrackCommandExecutorTest {
@@ -38,10 +41,10 @@ public class UntrackCommandExecutorTest {
             )
         ));
 
-        SendMessage actual = commandExecutor.execute("/untrack", chatId);
+        SendMessage actual = commandExecutor.execute(UNTRACK.getCommandName(), chatId);
 
         Assertions.assertThat(actual.getParameters().get("text"))
-            .isEqualTo("Выберите ссылку, у которой нужно прекратить отслеживание: ");
+            .isEqualTo(CHOOSE_LINK_TO_UNTRACK);
     }
 
     @Test
@@ -50,9 +53,9 @@ public class UntrackCommandExecutorTest {
         long chatId = 1;
         Mockito.when(linkService.getAllTrackedLinks(chatId)).thenReturn(Collections.emptyList());
 
-        SendMessage actual = commandExecutor.execute("/untrack", chatId);
+        SendMessage actual = commandExecutor.execute(UNTRACK.getCommandName(), chatId);
 
         Assertions.assertThat(actual.getParameters().get("text"))
-            .isEqualTo("Отслеживаемых ссылок нет 😥. Добавьте ссылку при помощи команды /track");
+            .isEqualTo(NO_TRACKED_LINKS);
     }
 }

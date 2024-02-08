@@ -42,7 +42,7 @@ public class BotConfig {
                 new StartCommandExecutor(),
                 new HelpCommandExecutor(),
                 new ListCommandExecutor(linkService()),
-                new TrackCommandExecutor(),
+                new TrackCommandExecutor(linkService()),
                 new UntrackCommandExecutor(linkService())
             ));
     }

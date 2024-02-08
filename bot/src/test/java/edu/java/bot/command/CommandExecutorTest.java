@@ -6,20 +6,17 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import static edu.java.bot.util.MessagesUtils.ERROR_MESSAGE;
 
 public class CommandExecutorTest {
 
-    private static final String ERROR_MESSAGE = """
-        <b>Ошибка:</b> Команда не существует. ❌
-        Пожалуйста, воспользуйтесь командой /help для получения списка доступных команд.
-        """;
     @Mock
     private LinkService linkService;
     private final CommandExecutor commandExecutor = CommandExecutor.link(
         new StartCommandExecutor(),
         new HelpCommandExecutor(),
         new ListCommandExecutor(linkService),
-        new TrackCommandExecutor(),
+        new TrackCommandExecutor(linkService),
         new UntrackCommandExecutor(linkService)
     );
 

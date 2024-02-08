@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static edu.java.bot.util.MessagesUtils.LINK_HAS_BEEN_UNTRACKED;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.times;
@@ -38,7 +39,7 @@ public class CallbackUpdateResolverTest {
 
         Mockito.verify(linkService, times(1)).untrackLink(chatId, linkId);
         assertThat(result.getParameters().get("chat_id")).isEqualTo(chatId);
-        assertThat(result.getParameters().get("text")).isEqualTo("Ссылка больше не отслеживается");
+        assertThat(result.getParameters().get("text")).isEqualTo(LINK_HAS_BEEN_UNTRACKED);
     }
 
     @Test

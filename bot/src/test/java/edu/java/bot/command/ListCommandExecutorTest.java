@@ -14,6 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import static edu.java.bot.command.Command.LIST;
+import static edu.java.bot.util.MessagesUtils.NO_TRACKED_LINKS;
+import static edu.java.bot.util.MessagesUtils.TRACKED_LINKS;
 
 @ExtendWith(MockitoExtension.class)
 public class ListCommandExecutorTest {
@@ -38,9 +41,9 @@ public class ListCommandExecutorTest {
             )
         ));
 
-        SendMessage actual = commandExecutor.execute("/list", chatId);
+        SendMessage actual = commandExecutor.execute(LIST.getCommandName(), chatId);
 
-        Assertions.assertThat(actual.getParameters().get("text")).isEqualTo("Отслеживаемые ссылки: ");
+        Assertions.assertThat(actual.getParameters().get("text")).isEqualTo(TRACKED_LINKS);
     }
 
     @Test
@@ -49,9 +52,9 @@ public class ListCommandExecutorTest {
         long chatId = 1;
         Mockito.when(linkService.getAllTrackedLinks(chatId)).thenReturn(Collections.emptyList());
 
-        SendMessage actual = commandExecutor.execute("/list", chatId);
+        SendMessage actual = commandExecutor.execute(LIST.getCommandName(), chatId);
 
         Assertions.assertThat(actual.getParameters().get("text"))
-            .isEqualTo("Отслеживаемых ссылок нет \uD83D\uDE25. Добавьте ссылку при помощи команды /track");
+            .isEqualTo(NO_TRACKED_LINKS);
     }
 }

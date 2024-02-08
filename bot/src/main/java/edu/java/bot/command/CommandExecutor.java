@@ -4,15 +4,11 @@ import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import static edu.java.bot.util.MessagesUtils.ERROR_MESSAGE;
 
 @RequiredArgsConstructor
 @Component
 public abstract class CommandExecutor {
-
-    private static final String ERROR_MESSAGE = """
-        <b>Ошибка:</b> Команда не существует. ❌
-        Пожалуйста, воспользуйтесь командой /help для получения списка доступных команд.
-        """;
 
     private CommandExecutor next;
 
