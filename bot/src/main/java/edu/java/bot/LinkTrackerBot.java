@@ -3,13 +3,10 @@ package edu.java.bot;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.BotCommand;
-import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SetMyCommands;
-import com.pengrad.telegrambot.response.SendResponse;
-import edu.java.bot.update_resolver.UpdateResolver;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Log4j2
@@ -17,30 +14,21 @@ import org.springframework.stereotype.Component;
 public class LinkTrackerBot extends TelegramBot {
 
     private final BotCommand[] commands;
-    private final UpdateResolver updateResolver;
+    private final UpdatesListener updatesListener;
 
-    public LinkTrackerBot(String telegramToken, BotCommand[] commands, UpdateResolver updateResolver) {
+    public LinkTrackerBot(
+        String telegramToken, BotCommand[] commands,
+        @Lazy UpdatesListener updatesListener
+    ) {
         super(telegramToken);
         this.commands = commands;
-        this.updateResolver = updateResolver;
+        this.updatesListener = updatesListener;
     }
 
     @PostConstruct
     private void start() {
         log.info("Bot has been started");
         execute(new SetMyCommands(commands));
-        setUpdatesListener(updates -> {
-            for (Update update : updates) {
-                processUpdate(update);
-            }
-            return UpdatesListener.CONFIRMED_UPDATES_ALL;
-        });
-    }
-
-    private void processUpdate(Update update) {
-        SendMessage message = updateResolver.resolve(update);
-        SendResponse response = execute(message);
-        log.info("Response is Ok: {}", response.isOk());
-        log.info("Response description : {}", response.description());
+        setUpdatesListener(updatesListener);
     }
 }
