@@ -3,6 +3,7 @@ package edu.java.bot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
+import edu.java.bot.message_sender.MessageSender;
 import edu.java.bot.update_resolver.UpdateResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class BotUpdatesListener implements UpdatesListener {
 
     private final UpdateResolver updateResolver;
-    private final MessageSender messageSender;
+    private final MessageSender messageSenderImpl;
 
     @Override
     public int process(List<Update> list) {
@@ -25,6 +26,6 @@ public class BotUpdatesListener implements UpdatesListener {
 
     private void processUpdate(Update update) {
         SendMessage message = updateResolver.resolve(update);
-        messageSender.sendMessage(message);
+        messageSenderImpl.sendMessage(message);
     }
 }

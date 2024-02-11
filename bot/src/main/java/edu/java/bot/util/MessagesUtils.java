@@ -37,4 +37,8 @@ public class MessagesUtils {
     public static final String ONLY_TEXT_TO_SEND = "Для отправки доступен только текст!";
     public static final String TRACK_EXAMPLE = "Отправьте команду в формате: /track <ссылка>";
     public static final String LINK_IS_TRACKED = "Ссылка %s теперь отслеживается ✅";
+    public static final String HTTPS_PREFIX = "https://";
+    public static final String HTTP_PREFIX = "http://";
+    public static final String LINK_SHOULD_STARTS_WITH_HTTP =
+        "Ссылка должна начинаться с " + HTTPS_PREFIX + " или " + HTTP_PREFIX + "❗";
 }

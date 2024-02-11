@@ -3,6 +3,7 @@ package edu.java.bot;
 import com.google.gson.Gson;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
+import edu.java.bot.message_sender.MessageSenderImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,14 +13,14 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class MessageSenderTest {
+public class MessageSenderImplTest {
 
     private final Gson gson = new Gson();
 
     @Mock
     private LinkTrackerBot bot;
     @InjectMocks
-    private MessageSender messageSender;
+    private MessageSenderImpl messageSenderImpl;
 
     @Test
     @DisplayName("MessageSender#sendMessage")
@@ -27,7 +28,7 @@ public class MessageSenderTest {
         SendMessage testMessage = new SendMessage(1, "test");
         Mockito.when(bot.execute(testMessage)).thenReturn(getResponse());
 
-        messageSender.sendMessage(testMessage);
+        messageSenderImpl.sendMessage(testMessage);
 
         Mockito.verify(bot).execute(testMessage);
     }
