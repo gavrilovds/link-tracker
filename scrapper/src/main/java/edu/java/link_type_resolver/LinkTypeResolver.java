@@ -13,7 +13,7 @@ public abstract class LinkTypeResolver {
         return first;
     }
 
-    protected abstract LinkType resolve(String link);
+    public abstract LinkType resolve(String link);
 
     protected LinkType resolveNext(String link) {
         if (next == null) {

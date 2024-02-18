@@ -4,11 +4,11 @@ import java.util.regex.Pattern;
 
 public class GithubLinkResolver extends LinkTypeResolver {
 
-    private static final Pattern GIT_LINK_PATTERN = Pattern.compile("https://github\\.com/([^/]+)/([^/]+)");
+    private static final Pattern GITHUB_LINK_PATTERN = Pattern.compile("https://github.com/([^/]+)/([^/]+)");
 
     @Override
-    protected LinkType resolve(String link) {
-        if (!GIT_LINK_PATTERN.matcher(link).find()) {
+    public LinkType resolve(String link) {
+        if (!GITHUB_LINK_PATTERN.matcher(link).find()) {
             return resolveNext(link);
         }
         return LinkType.GITHUB;

@@ -1,10 +1,12 @@
-package edu.java.scrapper.client;
+package edu.java.scrapper.information_reciever;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import edu.java.client.dto.github.GetRepoResponse;
-import edu.java.client.github.GithubClient;
-import edu.java.client.github.GithubClientImpl;
+import edu.java.client.link_information.LinkInformation;
+import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link_information.StackOverflowLinkInformationReceiver;
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +17,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GithubClientTest {
+public class StackOverflowLinkInformationReceiverTest {
 
     private static WireMockServer wireMockServer;
 
     @BeforeAll
     public static void setUp() {
-        String url = "/repos/gavrilovds/link-tracker";
+        String url = "/questions/13133695?site=stackoverflow";
         wireMockServer = new WireMockServer(wireMockConfig().dynamicPort());
         wireMockServer.stubFor(get(urlEqualTo(url))
             .willReturn(aResponse()
@@ -29,8 +31,8 @@ public class GithubClientTest {
                 .withHeader("Content-Type", "application/json")
                 .withBody("""
                     {
-                        "full_name": "gavrilovds/link-tracker",
-                        "updated_at": "2024-02-01T08:45:43Z"
+                        "title": "IncompatibleClassChangeError with Eclipse Jetty",
+                        "last_activity_date": 1352102450
                     }
                     """)));
         wireMockServer.start();
@@ -42,17 +44,22 @@ public class GithubClientTest {
     }
 
     @Test
-    @DisplayName("GithubClient#getRepository test")
-    public void getRepository_shouldReturnCorrectResponse() {
-        GithubClient client = new GithubClientImpl(wireMockServer.baseUrl());
+    @DisplayName("StackOverflowLinkInformationReceiver#receiveLinkInformation test")
+    public void getQuestion_shouldReturnCorrectResponse() {
+        LinkInformationReceiver stackOverflowClient =
+            new StackOverflowLinkInformationReceiver(wireMockServer.baseUrl());
 
-        GetRepoResponse actual = client.getRepository("gavrilovds", "link-tracker");
+        LinkInformation actual =
+            stackOverflowClient.receiveLinkInformation("https://stackoverflow.com/questions/13133695");
 
         assertThat(actual)
-            .extracting(GetRepoResponse::repoFullName, GetRepoResponse::lastUpdate)
+            .extracting(LinkInformation::link, LinkInformation::lastUpdate)
             .containsExactly(
-                "gavrilovds/link-tracker",
-                OffsetDateTime.parse("2024-02-01T08:45:43Z")
+                "https://stackoverflow.com/questions/13133695",
+                OffsetDateTime.ofInstant(
+                    Instant.ofEpochSecond(1352102450),
+                    ZoneOffset.UTC
+                )
             );
     }
 }

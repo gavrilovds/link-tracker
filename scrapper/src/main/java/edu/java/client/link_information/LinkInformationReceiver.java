@@ -6,9 +6,9 @@ public interface LinkInformationReceiver {
 
     LinkType getLinkType();
 
+    LinkInformation receiveLinkInformation(String link);
+
     default boolean canReceive(LinkType linkType) {
         return linkType.equals(getLinkType());
     }
-
-    LinkInformation receiveLinkInformation(String link);
 }

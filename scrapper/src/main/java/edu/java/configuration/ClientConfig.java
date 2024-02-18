@@ -1,9 +1,8 @@
 package edu.java.configuration;
 
-import edu.java.client.github.GithubClient;
-import edu.java.client.github.GithubClientImpl;
-import edu.java.client.stackoverflow.StackOverflowClient;
-import edu.java.client.stackoverflow.StackOverflowClientImpl;
+import edu.java.client.link_information.GithubLinkInformationReceiver;
+import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link_information.StackOverflowLinkInformationReceiver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,12 +10,12 @@ import org.springframework.context.annotation.Configuration;
 public class ClientConfig {
 
     @Bean
-    public StackOverflowClient stackOverflowClient() {
-        return new StackOverflowClientImpl();
+    public LinkInformationReceiver stackOverflowClient() {
+        return new StackOverflowLinkInformationReceiver();
     }
 
     @Bean
-    public GithubClient githubClient() {
-        return new GithubClientImpl();
+    public LinkInformationReceiver githubClient() {
+        return new GithubLinkInformationReceiver();
     }
 }

@@ -1,22 +1,20 @@
-package edu.java.client.github;
+package edu.java.client.link_information;
 
 import edu.java.client.dto.github.GetRepoResponse;
-import edu.java.client.link_information.LinkInformation;
-import edu.java.client.link_information.LinkInformationReceiver;
 import edu.java.link_type_resolver.LinkType;
 import java.net.URI;
 import org.springframework.web.reactive.function.client.WebClient;
 
-public class GithubClientImpl implements GithubClient, LinkInformationReceiver {
+public class GithubLinkInformationReceiver implements LinkInformationReceiver {
 
     private static final String BASE_URL = "https://api.github.com/";
     private final WebClient webClient;
 
-    public GithubClientImpl() {
+    public GithubLinkInformationReceiver() {
         this(BASE_URL);
     }
 
-    public GithubClientImpl(String baseUrl) {
+    public GithubLinkInformationReceiver(String baseUrl) {
         webClient = WebClient.builder().baseUrl(baseUrl).build();
     }
 
@@ -32,8 +30,7 @@ public class GithubClientImpl implements GithubClient, LinkInformationReceiver {
         return new LinkInformation(link, response.lastUpdate());
     }
 
-    @Override
-    public GetRepoResponse getRepository(String path) {
+    private GetRepoResponse getRepository(String path) {
         return webClient.get().uri("repos/" + path).retrieve().bodyToMono(GetRepoResponse.class)
             .block();
     }
