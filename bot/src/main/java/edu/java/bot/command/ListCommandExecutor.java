@@ -8,23 +8,27 @@ import edu.java.bot.util.KeyboardBuilder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import static edu.java.bot.command.Command.LIST;
 import static edu.java.bot.util.MessagesUtils.NO_TRACKED_LINKS;
 import static edu.java.bot.util.MessagesUtils.TRACKED_LINKS;
 
 @Log4j2
 @RequiredArgsConstructor
-public class ListCommandExecutor extends CommandExecutor {
+@Component
+public class ListCommandExecutor implements CommandExecutor {
 
     private final LinkService linkService;
 
     @Override
-    protected SendMessage execute(String command, long chatId) {
-        if (!command.equals(LIST.getName())) {
-            return executeNext(command, chatId);
-        }
+    public SendMessage execute(String command, long chatId) {
         log.info("Command /list has executed");
         return buildMessage(chatId);
+    }
+
+    @Override
+    public String getCommandName() {
+        return LIST.getName();
     }
 
     private SendMessage buildMessage(long chatId) {
@@ -35,4 +39,5 @@ public class ListCommandExecutor extends CommandExecutor {
         Keyboard keyboard = KeyboardBuilder.buildUrlKeyboard(links);
         return new SendMessage(chatId, TRACKED_LINKS).replyMarkup(keyboard);
     }
+
 }

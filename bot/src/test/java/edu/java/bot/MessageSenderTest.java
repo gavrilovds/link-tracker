@@ -1,6 +1,7 @@
 package edu.java.bot;
 
 import com.google.gson.Gson;
+import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import edu.java.bot.service.MessageSender;
@@ -18,7 +19,7 @@ public class MessageSenderTest {
     private final Gson gson = new Gson();
 
     @Mock
-    private LinkTrackerBot bot;
+    private TelegramBot bot;
     @InjectMocks
     private MessageSender messageSender;
 

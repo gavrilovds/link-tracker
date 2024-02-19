@@ -2,7 +2,6 @@ package edu.java.bot.update_resolver;
 
 import com.pengrad.telegrambot.model.Update;
 import edu.java.bot.command.CommandChain;
-import edu.java.bot.command.HelpCommandExecutor;
 import edu.java.bot.service.LinkService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +11,7 @@ public class UpdateResolverTest {
 
     private final UpdateResolver updateResolver =
         UpdateResolver.link(
-            new MessageUpdateResolver(new CommandChain(new HelpCommandExecutor())),
+            new MessageUpdateResolver(new CommandChain()),
             new CallbackUpdateResolver(new LinkService())
         );
 

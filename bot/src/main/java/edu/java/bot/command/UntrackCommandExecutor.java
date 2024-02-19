@@ -8,23 +8,27 @@ import edu.java.bot.util.KeyboardBuilder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import static edu.java.bot.command.Command.UNTRACK;
 import static edu.java.bot.util.MessagesUtils.CHOOSE_LINK_TO_UNTRACK;
 import static edu.java.bot.util.MessagesUtils.NO_TRACKED_LINKS;
 
 @Log4j2
 @RequiredArgsConstructor
-public class UntrackCommandExecutor extends CommandExecutor {
+@Component
+public class UntrackCommandExecutor implements CommandExecutor {
 
     private final LinkService linkService;
 
     @Override
-    protected SendMessage execute(String command, long chatId) {
-        if (!command.equals(UNTRACK.getName())) {
-            return executeNext(command, chatId);
-        }
+    public SendMessage execute(String command, long chatId) {
         log.info("Command /untrack has executed");
         return buildMessage(chatId);
+    }
+
+    @Override
+    public String getCommandName() {
+        return UNTRACK.getName();
     }
 
     private SendMessage buildMessage(long chatId) {

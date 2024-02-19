@@ -4,6 +4,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import edu.java.bot.service.LinkService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import static edu.java.bot.command.Command.TRACK;
 import static edu.java.bot.util.MessagesUtils.HTTPS_PREFIX;
 import static edu.java.bot.util.MessagesUtils.HTTP_PREFIX;
@@ -13,17 +14,20 @@ import static edu.java.bot.util.MessagesUtils.TRACK_EXAMPLE;
 
 @Log4j2
 @RequiredArgsConstructor
-public class TrackCommandExecutor extends CommandExecutor {
+@Component
+public class TrackCommandExecutor implements CommandExecutor {
 
     private final LinkService linkService;
 
     @Override
-    protected SendMessage execute(String command, long chatId) {
-        if (!command.startsWith(TRACK.getName())) {
-            return executeNext(command, chatId);
-        }
+    public SendMessage execute(String command, long chatId) {
         log.info("Command /track has executed");
         return buildMessage(command, chatId);
+    }
+
+    @Override
+    public String getCommandName() {
+        return TRACK.getName();
     }
 
     private SendMessage buildMessage(String command, long chatId) {

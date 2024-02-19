@@ -1,13 +1,8 @@
 package edu.java.bot.configuration;
 
+import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.BotCommand;
 import edu.java.bot.command.CommandChain;
-import edu.java.bot.command.CommandExecutor;
-import edu.java.bot.command.HelpCommandExecutor;
-import edu.java.bot.command.ListCommandExecutor;
-import edu.java.bot.command.StartCommandExecutor;
-import edu.java.bot.command.TrackCommandExecutor;
-import edu.java.bot.command.UntrackCommandExecutor;
 import edu.java.bot.service.LinkService;
 import edu.java.bot.update_resolver.CallbackUpdateResolver;
 import edu.java.bot.update_resolver.MessageUpdateResolver;
@@ -23,23 +18,11 @@ import static edu.java.bot.command.Command.UNTRACK;
 public class BotConfig {
 
     @Bean
-    public UpdateResolver updateResolver(LinkService linkService) {
+    public UpdateResolver updateResolver(LinkService linkService, CommandChain commandChain) {
         return UpdateResolver.link(
-            new MessageUpdateResolver(commandChain(linkService)),
+            new MessageUpdateResolver(commandChain),
             new CallbackUpdateResolver(linkService)
         );
-    }
-
-    @Bean
-    public CommandChain commandChain(LinkService linkService) {
-        return new CommandChain(
-            CommandExecutor.link(
-                new StartCommandExecutor(),
-                new HelpCommandExecutor(),
-                new ListCommandExecutor(linkService),
-                new TrackCommandExecutor(linkService),
-                new UntrackCommandExecutor(linkService)
-            ));
     }
 
     @Bean
@@ -53,7 +36,7 @@ public class BotConfig {
     }
 
     @Bean
-    public String telegramToken(ApplicationConfig applicationConfig) {
-        return applicationConfig.telegramToken();
+    public TelegramBot bot(ApplicationConfig applicationConfig) {
+        return new TelegramBot(applicationConfig.telegramToken());
     }
 }
