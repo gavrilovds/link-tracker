@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class BotUpdatesListener implements UpdatesListener {
 
     private final UpdateResolver updateResolver;
-    private final MessageSender messageSenderImpl;
+    private final MessageSender messageSender;
 
     @Override
     public int process(List<Update> list) {
@@ -26,6 +26,6 @@ public class BotUpdatesListener implements UpdatesListener {
 
     private void processUpdate(Update update) {
         SendMessage message = updateResolver.resolve(update);
-        messageSenderImpl.sendMessage(message);
+        messageSender.sendMessage(message);
     }
 }
