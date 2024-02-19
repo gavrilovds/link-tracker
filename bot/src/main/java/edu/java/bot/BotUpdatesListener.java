@@ -3,7 +3,7 @@ package edu.java.bot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.message_sender.MessageSender;
+import edu.java.bot.service.MessageSender;
 import edu.java.bot.update_resolver.UpdateResolver;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

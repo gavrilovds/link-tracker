@@ -23,37 +23,32 @@ import static edu.java.bot.command.Command.UNTRACK;
 public class BotConfig {
 
     @Bean
-    public LinkService linkService() {
-        return new LinkService();
-    }
-
-    @Bean
-    public UpdateResolver updateResolver() {
+    public UpdateResolver updateResolver(LinkService linkService) {
         return UpdateResolver.link(
-            new MessageUpdateResolver(commandChain()),
-            new CallbackUpdateResolver(linkService())
+            new MessageUpdateResolver(commandChain(linkService)),
+            new CallbackUpdateResolver(linkService)
         );
     }
 
     @Bean
-    public CommandChain commandChain() {
+    public CommandChain commandChain(LinkService linkService) {
         return new CommandChain(
             CommandExecutor.link(
                 new StartCommandExecutor(),
                 new HelpCommandExecutor(),
-                new ListCommandExecutor(linkService()),
-                new TrackCommandExecutor(linkService()),
-                new UntrackCommandExecutor(linkService())
+                new ListCommandExecutor(linkService),
+                new TrackCommandExecutor(linkService),
+                new UntrackCommandExecutor(linkService)
             ));
     }
 
     @Bean
     public BotCommand[] commands() {
         return new BotCommand[] {
-            new BotCommand(TRACK.getCommandName(), TRACK.getCommandDescription()),
-            new BotCommand(UNTRACK.getCommandName(), UNTRACK.getCommandDescription()),
-            new BotCommand(LIST.getCommandName(), LIST.getCommandDescription()),
-            new BotCommand(HELP.getCommandName(), HELP.getCommandDescription())
+            new BotCommand(TRACK.getName(), TRACK.getDescription()),
+            new BotCommand(UNTRACK.getName(), UNTRACK.getDescription()),
+            new BotCommand(LIST.getName(), LIST.getDescription()),
+            new BotCommand(HELP.getName(), HELP.getDescription())
         };
     }
 

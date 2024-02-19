@@ -12,6 +12,6 @@ public enum Command {
     LIST("/list", "Список отслеживаемых ссылок 📋"),
     HELP("/help", "Справка по командам ❓");
 
-    private final String commandName;
-    private final String commandDescription;
+    private final String name;
+    private final String description;
 }

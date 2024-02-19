@@ -41,7 +41,7 @@ public class UntrackCommandExecutorTest {
             )
         ));
 
-        SendMessage actual = commandExecutor.execute(UNTRACK.getCommandName(), chatId);
+        SendMessage actual = commandExecutor.execute(UNTRACK.getName(), chatId);
 
         Assertions.assertThat(actual.getParameters().get("text"))
             .isEqualTo(CHOOSE_LINK_TO_UNTRACK);
@@ -53,7 +53,7 @@ public class UntrackCommandExecutorTest {
         long chatId = 1;
         Mockito.when(linkService.getAllTrackedLinks(chatId)).thenReturn(Collections.emptyList());
 
-        SendMessage actual = commandExecutor.execute(UNTRACK.getCommandName(), chatId);
+        SendMessage actual = commandExecutor.execute(UNTRACK.getName(), chatId);
 
         Assertions.assertThat(actual.getParameters().get("text"))
             .isEqualTo(NO_TRACKED_LINKS);

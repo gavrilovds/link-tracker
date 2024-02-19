@@ -11,7 +11,7 @@ public class StartCommandExecutor extends CommandExecutor {
 
     @Override
     protected SendMessage execute(String command, long chatId) {
-        if (!command.equals(START.getCommandName())) {
+        if (!command.equals(START.getName())) {
             return executeNext(command, chatId);
         }
         log.info("Command /start has executed");

@@ -23,12 +23,12 @@ public class MessagesUtils {
         %s - %s
         %s - %s
         %s - %s
-        %s - %s""".formatted(TRACK.getCommandName(),
-        TRACK.getCommandDescription().toLowerCase(),
-        UNTRACK.getCommandName(),
-        UNTRACK.getCommandDescription().toLowerCase(),
-        LIST.getCommandName(), LIST.getCommandDescription().toLowerCase(),
-        HELP.getCommandName(), HELP.getCommandDescription().toLowerCase()
+        %s - %s""".formatted(TRACK.getName(),
+        TRACK.getDescription().toLowerCase(),
+        UNTRACK.getName(),
+        UNTRACK.getDescription().toLowerCase(),
+        LIST.getName(), LIST.getDescription().toLowerCase(),
+        HELP.getName(), HELP.getDescription().toLowerCase()
     );
     public static final String ERROR_MESSAGE = """
         <b>Ошибка:</b> Команда не существует. ❌

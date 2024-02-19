@@ -19,7 +19,7 @@ public class TrackCommandExecutor extends CommandExecutor {
 
     @Override
     protected SendMessage execute(String command, long chatId) {
-        if (!command.startsWith(TRACK.getCommandName())) {
+        if (!command.startsWith(TRACK.getName())) {
             return executeNext(command, chatId);
         }
         log.info("Command /track has executed");
