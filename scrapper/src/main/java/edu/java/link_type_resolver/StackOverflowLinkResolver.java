@@ -1,15 +1,12 @@
 package edu.java.link_type_resolver;
 
-import java.util.regex.Pattern;
-
 public class StackOverflowLinkResolver extends LinkTypeResolver {
 
-    private static final Pattern STACKOVERFLOW_LINK_PATTERN =
-        Pattern.compile("https://stackoverflow.com/questions/(\\d+).*");
+    private static final String STACKOVERFLOW_PREFIX = "https://stackoverflow.com/";
 
     @Override
     public LinkType resolve(String link) {
-        if (!STACKOVERFLOW_LINK_PATTERN.matcher(link).find()) {
+        if (!link.startsWith(STACKOVERFLOW_PREFIX)) {
             return resolveNext(link);
         }
         return LinkType.STACKOVERFLOW;

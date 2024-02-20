@@ -1,14 +1,16 @@
 package edu.java.client.link_information;
 
 import edu.java.link_type_resolver.LinkType;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public interface LinkInformationReceiver {
 
     LinkType getLinkType();
 
-    LinkInformation receiveLinkInformation(String link);
+    LastUpdateTime receiveLastUpdateTime(String link);
 
-    default boolean canReceive(LinkType linkType) {
-        return linkType.equals(getLinkType());
+    @Autowired
+    default void registerMyself(LinkInformationReceiverProvider provider) {
+        provider.registerReceiver(getLinkType(), this);
     }
 }

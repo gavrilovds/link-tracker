@@ -1,10 +1,12 @@
 package edu.java.scrapper.information_reciever;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import edu.java.client.link_information.GithubLinkInformationReceiver;
-import edu.java.client.link_information.LinkInformation;
+import edu.java.client.link_information.LastUpdateTime;
 import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.stackoverflow.StackOverflowClientImpl;
+import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -15,13 +17,13 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GithubLinkInformationReceiverTest {
+public class StackOverflowClientImplTest {
 
     private static WireMockServer wireMockServer;
 
     @BeforeAll
     public static void setUp() {
-        String url = "/repos/gavrilovds/link-tracker";
+        String url = "/questions/13133695?site=stackoverflow";
         wireMockServer = new WireMockServer(wireMockConfig().dynamicPort());
         wireMockServer.stubFor(get(urlEqualTo(url))
             .willReturn(aResponse()
@@ -29,8 +31,8 @@ public class GithubLinkInformationReceiverTest {
                 .withHeader("Content-Type", "application/json")
                 .withBody("""
                     {
-                        "full_name": "gavrilovds/link-tracker",
-                        "updated_at": "2024-02-01T08:45:43Z"
+                        "title": "IncompatibleClassChangeError with Eclipse Jetty",
+                        "last_activity_date": 1352102450
                     }
                     """)));
         wireMockServer.start();
@@ -42,17 +44,17 @@ public class GithubLinkInformationReceiverTest {
     }
 
     @Test
-    @DisplayName("GithubLinkInformationReceiver#receiveLinkInformation test")
-    public void getRepository_shouldReturnCorrectResponse() {
-        LinkInformationReceiver client = new GithubLinkInformationReceiver(wireMockServer.baseUrl());
+    @DisplayName("StackOverflowClientImpl#receiveLastUpdateTime test")
+    public void receiveLastUpdateTime_shouldReturnCorrectResponse() {
+        LinkInformationReceiver stackOverflowClient =
+            new StackOverflowClientImpl(wireMockServer.baseUrl());
 
-        LinkInformation actual = client.receiveLinkInformation("https://github.com/gavrilovds/link-tracker");
+        LastUpdateTime actual =
+            stackOverflowClient.receiveLastUpdateTime("https://stackoverflow.com/questions/13133695/weorhfweor");
 
-        assertThat(actual)
-            .extracting(LinkInformation::link, LinkInformation::lastUpdate)
-            .containsExactly(
-                "https://github.com/gavrilovds/link-tracker",
-                OffsetDateTime.parse("2024-02-01T08:45:43Z")
-            );
+        assertThat(actual.lastUpdate()).isEqualTo(OffsetDateTime.ofInstant(
+            Instant.ofEpochSecond(1352102450),
+            ZoneOffset.UTC
+        ));
     }
 }
