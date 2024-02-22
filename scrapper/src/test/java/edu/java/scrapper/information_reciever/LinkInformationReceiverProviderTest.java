@@ -1,6 +1,6 @@
 package edu.java.scrapper.information_reciever;
 
-import edu.java.client.github.GithubClientImpl;
+import edu.java.client.github.GithubClient;
 import edu.java.client.link_information.LinkInformationReceiver;
 import edu.java.client.link_information.LinkInformationReceiverProvider;
 import edu.java.link_type_resolver.LinkType;
@@ -14,10 +14,10 @@ class LinkInformationReceiverProviderTest {
     @DisplayName("LinkInformationReceiverProvider#getReceiver basic test")
     public void getReceiver_shouldReturnCorrectReceiver() {
         LinkInformationReceiverProvider provider = new LinkInformationReceiverProvider();
-        provider.registerReceiver(LinkType.GITHUB, new GithubClientImpl());
+        provider.registerReceiver(LinkType.GITHUB, new GithubClient());
 
         LinkInformationReceiver actual = provider.getReceiver(LinkType.GITHUB);
 
-        assertThat(actual).isInstanceOf(GithubClientImpl.class);
+        assertThat(actual).isInstanceOf(GithubClient.class);
     }
 }

@@ -1,7 +1,7 @@
 package edu.java.scrapper.information_reciever;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import edu.java.client.github.GithubClientImpl;
+import edu.java.client.github.GithubClient;
 import edu.java.client.link_information.LastUpdateTime;
 import edu.java.client.link_information.LinkInformationReceiver;
 import java.time.OffsetDateTime;
@@ -15,7 +15,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GithubClientImplTest {
+public class GithubServiceClientTest {
 
     private static WireMockServer wireMockServer;
 
@@ -42,9 +42,9 @@ public class GithubClientImplTest {
     }
 
     @Test
-    @DisplayName("GithubClientImpl#receiveLastUpdateTime test")
+    @DisplayName("GithubClient#receiveLastUpdateTime test")
     public void receiveLastUpdateTime_shouldReturnCorrectResponse() {
-        LinkInformationReceiver client = new GithubClientImpl(wireMockServer.baseUrl());
+        LinkInformationReceiver client = new GithubClient(wireMockServer.baseUrl());
 
         LastUpdateTime actual = client.receiveLastUpdateTime("https://github.com/gavrilovds/link-tracker");
 

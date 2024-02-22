@@ -3,7 +3,7 @@ package edu.java.scrapper.information_reciever;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import edu.java.client.link_information.LastUpdateTime;
 import edu.java.client.link_information.LinkInformationReceiver;
-import edu.java.client.stackoverflow.StackOverflowClientImpl;
+import edu.java.client.stackoverflow.StackOverflowClient;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -17,7 +17,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StackOverflowClientImplTest {
+public class StackOverflowClientTest {
 
     private static WireMockServer wireMockServer;
 
@@ -44,10 +44,10 @@ public class StackOverflowClientImplTest {
     }
 
     @Test
-    @DisplayName("StackOverflowClientImpl#receiveLastUpdateTime test")
+    @DisplayName("StackOverflowClient#receiveLastUpdateTime test")
     public void receiveLastUpdateTime_shouldReturnCorrectResponse() {
         LinkInformationReceiver stackOverflowClient =
-            new StackOverflowClientImpl(wireMockServer.baseUrl());
+            new StackOverflowClient(wireMockServer.baseUrl());
 
         LastUpdateTime actual =
             stackOverflowClient.receiveLastUpdateTime("https://stackoverflow.com/questions/13133695/weorhfweor");
