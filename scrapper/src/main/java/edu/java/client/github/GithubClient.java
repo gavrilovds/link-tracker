@@ -11,7 +11,7 @@ public class GithubClient extends AbstractWebClient {
 
     private static final String BASE_URL = "https://api.github.com/";
     private static final Pattern REPOSITORY_PATTERN = Pattern.compile("https://github.com/(.+)/(.+)");
-    private final GithubService githubService;
+    private final GithubService service;
 
     public GithubClient() {
         this(BASE_URL);
@@ -19,7 +19,7 @@ public class GithubClient extends AbstractWebClient {
 
     public GithubClient(String baseUrl) {
         super(baseUrl);
-        githubService = factory.createClient(GithubService.class);
+        service = factory.createClient(GithubService.class);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class GithubClient extends AbstractWebClient {
         if (!matcher.find()) {
             return null;
         }
-        GetRepoResponse response = githubService.getRepository(matcher.group(1), matcher.group(2));
+        GetRepoResponse response = service.getRepository(matcher.group(1), matcher.group(2));
         return new LastUpdateTime(response.lastUpdate());
     }
 }

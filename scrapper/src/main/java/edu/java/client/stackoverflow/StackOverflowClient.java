@@ -13,7 +13,7 @@ public class StackOverflowClient extends AbstractWebClient {
     private static final Pattern STACKOVERFLOW_LINK_PATTERN =
         Pattern.compile("https://stackoverflow.com/questions/(\\d+).*");
 
-    private final StackOverflowService client;
+    private final StackOverflowService service;
 
     public StackOverflowClient() {
         this(BASE_URL);
@@ -21,7 +21,7 @@ public class StackOverflowClient extends AbstractWebClient {
 
     public StackOverflowClient(String baseUrl) {
         super(baseUrl);
-        client = factory.createClient(StackOverflowService.class);
+        service = factory.createClient(StackOverflowService.class);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class StackOverflowClient extends AbstractWebClient {
         if (!matcher.find()) {
             return null;
         }
-        GetQuestionResponse response = client.getQuestion(matcher.group(1));
+        GetQuestionResponse response = service.getQuestion(matcher.group(1));
         return new LastUpdateTime(response.lastUpdate());
     }
 }
