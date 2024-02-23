@@ -3,6 +3,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 bot/src/main/resources/application-dev.yml
+scrapper/src/main/resources/application-dev.yml
 
 ### STS ###
 .apt_generated
