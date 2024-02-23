@@ -9,17 +9,21 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration public class ClientConfig {
 
-    @Value("${client.stackoverflow.base-url}") private String stackOverflowBaseUrl;
-    @Value("${client.github.base-url}") private String githubBaseUrl;
+    @Value("${client.stackoverflow.base-url}")
+    private String stackOverflowBaseUrl;
+    @Value("${client.github.base-url}")
+    private String githubBaseUrl;
 
-    @Bean public LinkInformationReceiver stackOverflowClient() {
+    @Bean
+    public LinkInformationReceiver stackOverflowClient() {
         if (stackOverflowBaseUrl.isEmpty()) {
             return new StackOverflowClient();
         }
         return new StackOverflowClient(stackOverflowBaseUrl);
     }
 
-    @Bean public LinkInformationReceiver githubClient() {
+    @Bean
+    public LinkInformationReceiver githubClient() {
         if (githubBaseUrl.isEmpty()) {
             return new GithubClient();
         }
