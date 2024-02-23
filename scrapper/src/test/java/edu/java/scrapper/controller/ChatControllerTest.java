@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,7 +54,7 @@ public class ChatControllerTest {
     public void deleteChat_shouldReturn200_whenAllIsCorrect() {
         Mockito.doNothing().when(chatService).deleteChat(CHAT_ID);
 
-        mvc.perform(post("/tg-chat/" + CHAT_ID))
+        mvc.perform(delete("/tg-chat/" + CHAT_ID))
             .andExpect(status().isOk());
     }
 }
