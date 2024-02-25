@@ -3,11 +3,12 @@ package edu.java.client.github;
 import edu.java.client.AbstractWebClient;
 import edu.java.client.dto.github.GetRepoResponse;
 import edu.java.client.link_information.LastUpdateTime;
+import edu.java.client.link_information.LinkInformationReceiver;
 import edu.java.link_type_resolver.LinkType;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GithubClient extends AbstractWebClient {
+public class GithubClient extends AbstractWebClient implements LinkInformationReceiver {
 
     private static final String BASE_URL = "https://api.github.com/";
     private static final Pattern REPOSITORY_PATTERN = Pattern.compile("https://github.com/(.+)/(.+)");

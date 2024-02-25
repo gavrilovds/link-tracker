@@ -3,11 +3,12 @@ package edu.java.client.stackoverflow;
 import edu.java.client.AbstractWebClient;
 import edu.java.client.dto.stackoverflow.GetQuestionResponse;
 import edu.java.client.link_information.LastUpdateTime;
+import edu.java.client.link_information.LinkInformationReceiver;
 import edu.java.link_type_resolver.LinkType;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StackOverflowClient extends AbstractWebClient {
+public class StackOverflowClient extends AbstractWebClient implements LinkInformationReceiver {
 
     private static final String BASE_URL = "https://api.stackexchange.com/2.3/";
     private static final Pattern STACKOVERFLOW_LINK_PATTERN =
