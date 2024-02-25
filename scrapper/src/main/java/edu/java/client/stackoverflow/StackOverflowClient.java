@@ -2,19 +2,18 @@ package edu.java.client.stackoverflow;
 
 import edu.java.client.AbstractWebClient;
 import edu.java.client.dto.stackoverflow.GetQuestionResponse;
-import edu.java.client.link_information.LastUpdateTime;
-import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link.LastUpdateTime;
+import edu.java.client.link.LinkInformationProvider;
 import edu.java.link_type_resolver.LinkType;
+import edu.java.service.StackOverflowService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class StackOverflowClient extends AbstractWebClient implements LinkInformationReceiver {
+public class StackOverflowClient extends AbstractWebClient<StackOverflowService> implements LinkInformationProvider {
 
     private static final String BASE_URL = "https://api.stackexchange.com/2.3/";
     private static final Pattern STACKOVERFLOW_LINK_PATTERN =
         Pattern.compile("https://stackoverflow.com/questions/(\\d+).*");
-
-    private final StackOverflowService service;
 
     public StackOverflowClient() {
         this(BASE_URL);
@@ -22,7 +21,6 @@ public class StackOverflowClient extends AbstractWebClient implements LinkInform
 
     public StackOverflowClient(String baseUrl) {
         super(baseUrl);
-        service = factory.createClient(StackOverflowService.class);
     }
 
     @Override

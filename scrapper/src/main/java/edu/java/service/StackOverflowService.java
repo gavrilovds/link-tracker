@@ -1,4 +1,4 @@
-package edu.java.client.stackoverflow;
+package edu.java.service;
 
 import edu.java.client.dto.stackoverflow.GetQuestionResponse;
 import org.springframework.web.bind.annotation.PathVariable;

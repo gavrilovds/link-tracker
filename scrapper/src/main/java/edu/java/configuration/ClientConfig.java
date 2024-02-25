@@ -1,7 +1,7 @@
 package edu.java.configuration;
 
 import edu.java.client.github.GithubClient;
-import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link.LinkInformationProvider;
 import edu.java.client.stackoverflow.StackOverflowClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ public class ClientConfig {
     private String githubBaseUrl;
 
     @Bean
-    public LinkInformationReceiver stackOverflowClient() {
+    public LinkInformationProvider stackOverflowClient() {
         if (stackOverflowBaseUrl.isEmpty()) {
             return new StackOverflowClient();
         }
@@ -24,7 +24,7 @@ public class ClientConfig {
     }
 
     @Bean
-    public LinkInformationReceiver githubClient() {
+    public LinkInformationProvider githubClient() {
         if (githubBaseUrl.isEmpty()) {
             return new GithubClient();
         }

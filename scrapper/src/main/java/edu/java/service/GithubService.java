@@ -1,4 +1,4 @@
-package edu.java.client.github;
+package edu.java.service;
 
 import edu.java.client.dto.github.GetRepoResponse;
 import org.springframework.web.bind.annotation.PathVariable;

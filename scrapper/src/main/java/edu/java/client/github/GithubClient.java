@@ -2,17 +2,17 @@ package edu.java.client.github;
 
 import edu.java.client.AbstractWebClient;
 import edu.java.client.dto.github.GetRepoResponse;
-import edu.java.client.link_information.LastUpdateTime;
-import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link.LastUpdateTime;
+import edu.java.client.link.LinkInformationProvider;
 import edu.java.link_type_resolver.LinkType;
+import edu.java.service.GithubService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class GithubClient extends AbstractWebClient implements LinkInformationReceiver {
+public class GithubClient extends AbstractWebClient<GithubService> implements LinkInformationProvider {
 
     private static final String BASE_URL = "https://api.github.com/";
     private static final Pattern REPOSITORY_PATTERN = Pattern.compile("https://github.com/(.+)/(.+)");
-    private final GithubService service;
 
     public GithubClient() {
         this(BASE_URL);
@@ -20,7 +20,6 @@ public class GithubClient extends AbstractWebClient implements LinkInformationRe
 
     public GithubClient(String baseUrl) {
         super(baseUrl);
-        service = factory.createClient(GithubService.class);
     }
 
     @Override

@@ -2,8 +2,8 @@ package edu.java.scrapper.information_reciever;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import edu.java.client.github.GithubClient;
-import edu.java.client.link_information.LastUpdateTime;
-import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link.LastUpdateTime;
+import edu.java.client.link.LinkInformationProvider;
 import java.time.OffsetDateTime;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -44,7 +44,7 @@ public class GithubClientTest {
     @Test
     @DisplayName("GithubClient#receiveLastUpdateTime test")
     public void receiveLastUpdateTime_shouldReturnCorrectResponse() {
-        LinkInformationReceiver client = new GithubClient(wireMockServer.baseUrl());
+        LinkInformationProvider client = new GithubClient(wireMockServer.baseUrl());
 
         LastUpdateTime actual = client.receiveLastUpdateTime("https://github.com/gavrilovds/link-tracker");
 
