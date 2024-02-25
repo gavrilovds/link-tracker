@@ -5,7 +5,7 @@ import edu.java.client.link.LinkInformationProvider;
 import edu.java.client.link.LinkInformationReceiverManager;
 import edu.java.link_type_resolver.LinkType;
 import java.util.List;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LinkInformationReceiverManagerTest {
