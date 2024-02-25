@@ -2,8 +2,8 @@ package edu.java.bot.update_resolver;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.service.LinkService;
-import java.util.UUID;
+import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.dto.RemoveLinkRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import static edu.java.bot.util.MessagesUtils.LINK_HAS_BEEN_UNTRACKED;
@@ -12,7 +12,7 @@ import static edu.java.bot.util.MessagesUtils.LINK_HAS_BEEN_UNTRACKED;
 @Log4j2
 public class CallbackUpdateResolver extends UpdateResolver {
 
-    private final LinkService linkService;
+    private final ScrapperClient scrapperClient;
 
     @Override
     public SendMessage resolve(Update update) {
@@ -28,6 +28,6 @@ public class CallbackUpdateResolver extends UpdateResolver {
         if (!data.startsWith("/untrack:")) {
             throw new RuntimeException("Invalid callback");
         }
-        linkService.untrackLink(chatId, UUID.fromString(data.split(":")[1]));
+        scrapperClient.untrackLink(chatId, new RemoveLinkRequest(Long.parseLong(data.split(":")[1])));
     }
 }

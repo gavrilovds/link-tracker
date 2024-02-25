@@ -2,8 +2,9 @@ package edu.java.bot.command;
 
 import com.pengrad.telegrambot.model.request.Keyboard;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.dto.Link;
-import edu.java.bot.service.LinkService;
+import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.dto.LinkResponse;
+import edu.java.bot.dto.ListLinksResponse;
 import edu.java.bot.util.KeyboardBuilder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import static edu.java.bot.util.MessagesUtils.NO_TRACKED_LINKS;
 @Component
 public class UntrackCommandExecutor implements CommandExecutor {
 
-    private final LinkService linkService;
+    private final ScrapperClient scrapperClient;
 
     @Override
     public SendMessage execute(String command, long chatId) {
@@ -32,7 +33,8 @@ public class UntrackCommandExecutor implements CommandExecutor {
     }
 
     private SendMessage buildMessage(long chatId) {
-        List<Link> links = linkService.getAllTrackedLinks(chatId);
+        ListLinksResponse listLinksResponse = scrapperClient.getAllTrackedLinks(chatId);
+        List<LinkResponse> links = listLinksResponse.links();
         if (links.isEmpty()) {
             return new SendMessage(chatId, NO_TRACKED_LINKS);
         }

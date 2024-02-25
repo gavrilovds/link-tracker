@@ -1,7 +1,8 @@
 package edu.java.bot.command;
 
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.service.LinkService;
+import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.dto.AddLinkRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,7 @@ import static edu.java.bot.util.MessagesUtils.LINK_SHOULD_STARTS_WITH_HTTP;
 public class TrackCommandExecutorTest {
 
     @Mock
-    private LinkService linkService;
+    private ScrapperClient scrapperClient;
     @InjectMocks
     private TrackCommandExecutor commandExecutor;
 
@@ -31,7 +32,7 @@ public class TrackCommandExecutorTest {
 
         Assertions.assertThat(actual.getParameters().get("text"))
             .isEqualTo(LINK_IS_TRACKED.formatted(command.split(" ")[1]));
-        Mockito.verify(linkService).trackLink(chatId, command.split(" ")[1]);
+        Mockito.verify(scrapperClient).trackLink(chatId, new AddLinkRequest(command.split(" ")[1]));
     }
 
     @Test

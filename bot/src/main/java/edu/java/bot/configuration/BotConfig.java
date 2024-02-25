@@ -2,8 +2,8 @@ package edu.java.bot.configuration;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.BotCommand;
+import edu.java.bot.client.scrapper.ScrapperClient;
 import edu.java.bot.command.CommandChain;
-import edu.java.bot.service.LinkService;
 import edu.java.bot.update_resolver.CallbackUpdateResolver;
 import edu.java.bot.update_resolver.MessageUpdateResolver;
 import edu.java.bot.update_resolver.UpdateResolver;
@@ -18,10 +18,10 @@ import static edu.java.bot.command.Command.UNTRACK;
 public class BotConfig {
 
     @Bean
-    public UpdateResolver updateResolver(LinkService linkService, CommandChain commandChain) {
+    public UpdateResolver updateResolver(ScrapperClient scrapperClient, CommandChain commandChain) {
         return UpdateResolver.link(
             new MessageUpdateResolver(commandChain),
-            new CallbackUpdateResolver(linkService)
+            new CallbackUpdateResolver(scrapperClient)
         );
     }
 

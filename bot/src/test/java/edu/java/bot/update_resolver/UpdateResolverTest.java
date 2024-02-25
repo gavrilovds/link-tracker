@@ -1,6 +1,7 @@
 package edu.java.bot.update_resolver;
 
 import com.pengrad.telegrambot.model.Update;
+import edu.java.bot.client.scrapper.ScrapperClient;
 import edu.java.bot.command.CommandChain;
 import edu.java.bot.service.LinkService;
 import org.assertj.core.api.Assertions;
@@ -12,7 +13,7 @@ public class UpdateResolverTest {
     private final UpdateResolver updateResolver =
         UpdateResolver.link(
             new MessageUpdateResolver(new CommandChain()),
-            new CallbackUpdateResolver(new LinkService())
+            new CallbackUpdateResolver(new ScrapperClient())
         );
 
     @Test

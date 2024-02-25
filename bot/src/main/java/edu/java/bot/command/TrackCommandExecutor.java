@@ -1,7 +1,8 @@
 package edu.java.bot.command;
 
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.service.LinkService;
+import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.dto.AddLinkRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import static edu.java.bot.util.MessagesUtils.TRACK_EXAMPLE;
 @Component
 public class TrackCommandExecutor implements CommandExecutor {
 
-    private final LinkService linkService;
+    private final ScrapperClient scrapperClient;
 
     @Override
     public SendMessage execute(String command, long chatId) {
@@ -38,7 +39,7 @@ public class TrackCommandExecutor implements CommandExecutor {
         if (!splitCommand[1].startsWith(HTTPS_PREFIX) && !splitCommand[1].startsWith(HTTP_PREFIX)) {
             return new SendMessage(chatId, LINK_SHOULD_STARTS_WITH_HTTP);
         }
-        linkService.trackLink(chatId, splitCommand[1]);
+        scrapperClient.trackLink(chatId, new AddLinkRequest(splitCommand[1]));
         return new SendMessage(chatId, LINK_IS_TRACKED.formatted(splitCommand[1]));
     }
 }
