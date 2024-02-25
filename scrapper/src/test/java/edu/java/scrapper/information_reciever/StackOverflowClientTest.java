@@ -31,8 +31,12 @@ public class StackOverflowClientTest {
                 .withHeader("Content-Type", "application/json")
                 .withBody("""
                     {
-                        "title": "IncompatibleClassChangeError with Eclipse Jetty",
-                        "last_activity_date": 1352102450
+                        "items": [
+                            {
+                                "title": "IncompatibleClassChangeError with Eclipse Jetty",
+                                "last_activity_date": 1352102450
+                            }
+                        ]
                     }
                     """)));
         wireMockServer.start();

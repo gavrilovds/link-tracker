@@ -37,6 +37,6 @@ public class StackOverflowClient extends AbstractWebClient implements LinkInform
             return null;
         }
         GetQuestionResponse response = service.getQuestion(matcher.group(1));
-        return new LastUpdateTime(response.lastUpdate());
+        return new LastUpdateTime(response.items().get(0).lastUpdate());
     }
 }
