@@ -2,7 +2,11 @@ package edu.java.client.dto.stackoverflow;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
+import java.util.List;
 
-public record GetQuestionResponse(@JsonProperty("last_activity_date") OffsetDateTime lastUpdate) {
+public record GetQuestionResponse(List<GetQuestionResponseItem> items) {
 
+    public record GetQuestionResponseItem(@JsonProperty("last_activity_date") OffsetDateTime lastUpdate) {
+
+    }
 }

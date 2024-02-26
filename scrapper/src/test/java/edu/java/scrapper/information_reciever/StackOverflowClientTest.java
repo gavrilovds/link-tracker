@@ -1,8 +1,8 @@
 package edu.java.scrapper.information_reciever;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import edu.java.client.link_information.LastUpdateTime;
-import edu.java.client.link_information.LinkInformationReceiver;
+import edu.java.client.link.LastUpdateTime;
+import edu.java.client.link.LinkInformationProvider;
 import edu.java.client.stackoverflow.StackOverflowClient;
 import java.time.Instant;
 import java.time.OffsetDateTime;
@@ -31,8 +31,12 @@ public class StackOverflowClientTest {
                 .withHeader("Content-Type", "application/json")
                 .withBody("""
                     {
-                        "title": "IncompatibleClassChangeError with Eclipse Jetty",
-                        "last_activity_date": 1352102450
+                        "items": [
+                            {
+                                "title": "IncompatibleClassChangeError with Eclipse Jetty",
+                                "last_activity_date": 1352102450
+                            }
+                        ]
                     }
                     """)));
         wireMockServer.start();
@@ -46,7 +50,7 @@ public class StackOverflowClientTest {
     @Test
     @DisplayName("StackOverflowClient#receiveLastUpdateTime test")
     public void receiveLastUpdateTime_shouldReturnCorrectResponse() {
-        LinkInformationReceiver stackOverflowClient =
+        LinkInformationProvider stackOverflowClient =
             new StackOverflowClient(wireMockServer.baseUrl());
 
         LastUpdateTime actual =

@@ -1,4 +1,4 @@
-package edu.java.client.link_information;
+package edu.java.client.link;
 
 import java.time.OffsetDateTime;
 
