@@ -10,6 +10,12 @@ client:
   github:
     base-url:
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+
+
+
 spring:
   application:
     name: scrapper

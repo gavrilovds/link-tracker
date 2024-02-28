@@ -2,7 +2,7 @@ package edu.java.bot.configuration;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.BotCommand;
-import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.command.CommandChain;
 import edu.java.bot.update_resolver.CallbackUpdateResolver;
 import edu.java.bot.update_resolver.MessageUpdateResolver;

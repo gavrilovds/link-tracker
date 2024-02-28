@@ -1,15 +1,14 @@
-package edu.java.bot.client.scrapper;
+package edu.java.bot.client;
 
-import edu.java.bot.client.AbstractWebClient;
 import edu.java.bot.dto.AddLinkRequest;
 import edu.java.bot.dto.LinkResponse;
 import edu.java.bot.dto.ListLinksResponse;
 import edu.java.bot.dto.RemoveLinkRequest;
+import edu.java.bot.service.ScrapperService;
 
-public class ScrapperClient extends AbstractWebClient {
+public class ScrapperClient extends AbstractWebClient<ScrapperService> {
 
     private static final String BASE_URL = "http://localhost:8080/";
-    private final ScrapperService scrapperService;
 
     public ScrapperClient() {
         this(BASE_URL);
@@ -17,18 +16,25 @@ public class ScrapperClient extends AbstractWebClient {
 
     public ScrapperClient(String baseUrl) {
         super(baseUrl);
-        scrapperService = factory.createClient(ScrapperService.class);
     }
 
     public ListLinksResponse getAllTrackedLinks(long chatId) {
-        return scrapperService.getAllLinks(chatId);
+        return service.getAllLinks(chatId);
     }
 
     public LinkResponse trackLink(long chatId, AddLinkRequest addLinkRequest) {
-        return scrapperService.trackLink(chatId, addLinkRequest);
+        return service.trackLink(chatId, addLinkRequest);
     }
 
     public LinkResponse untrackLink(long chatId, RemoveLinkRequest removeLinkRequest) {
-        return scrapperService.untrackLink(chatId, removeLinkRequest);
+        return service.untrackLink(chatId, removeLinkRequest);
+    }
+
+    public void registerChat(long chatId) {
+        service.registerChat(chatId);
+    }
+
+    public void deleteChat(long chatId) {
+        service.deleteChat(chatId);
     }
 }

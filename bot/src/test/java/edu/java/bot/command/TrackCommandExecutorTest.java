@@ -1,7 +1,7 @@
 package edu.java.bot.command;
 
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.dto.AddLinkRequest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

@@ -3,7 +3,7 @@ package edu.java.bot.update_resolver;
 import com.google.gson.Gson;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.client.scrapper.ScrapperClient;
+import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.dto.RemoveLinkRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
