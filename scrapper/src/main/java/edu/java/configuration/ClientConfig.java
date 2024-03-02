@@ -1,5 +1,6 @@
 package edu.java.configuration;
 
+import edu.java.client.bot.BotClient;
 import edu.java.client.github.GithubClient;
 import edu.java.client.link.LinkInformationProvider;
 import edu.java.client.stackoverflow.StackOverflowClient;
@@ -14,6 +15,8 @@ public class ClientConfig {
     private String stackOverflowBaseUrl;
     @Value("${client.github.base-url}")
     private String githubBaseUrl;
+    @Value("${client.but.base-url")
+    private String botBaseUrl;
 
     @Bean
     public LinkInformationProvider stackOverflowClient() {
@@ -29,5 +32,13 @@ public class ClientConfig {
             return new GithubClient();
         }
         return new GithubClient(githubBaseUrl);
+    }
+
+    @Bean
+    public BotClient botClient() {
+        if (botBaseUrl.isEmpty()) {
+            return new BotClient();
+        }
+        return new BotClient(botBaseUrl);
     }
 }

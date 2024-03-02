@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
-public class ControllerAdvice {
+public class GlobalExceptionHandler {
 
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
     @ExceptionHandler(ChatAlreadyRegisteredException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiErrorResponse chatAlreadyRegisteredException(ChatAlreadyRegisteredException e) {
@@ -32,6 +33,7 @@ public class ControllerAdvice {
         );
     }
 
+    @SuppressWarnings("checkstyle:MultipleStringLiterals")
     @ExceptionHandler(ChatNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrorResponse chatNotFoundException(ChatNotFoundException e) {

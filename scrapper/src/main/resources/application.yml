@@ -9,6 +9,8 @@ client:
     base-url:
   github:
     base-url:
+  bot:
+    base-url:
 
 springdoc:
   swagger-ui:

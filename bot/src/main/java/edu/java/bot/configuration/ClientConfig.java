@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ClientConfiguration {
+public class ClientConfig {
 
     @Value("${client.scrapper.base-url}")
     private String scrapperBaseUrl;
