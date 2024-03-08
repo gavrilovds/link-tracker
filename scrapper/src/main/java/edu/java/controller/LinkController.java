@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,27 +21,26 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 public class LinkController {
 
-    private static final String TG_CHAT_ID_HEADER = "Tg-Chat-Id";
     private final LinkService linkService;
 
-    @GetMapping
-    public ListLinksResponse getAllLinks(@RequestHeader(TG_CHAT_ID_HEADER) long chatId) {
+    @GetMapping("/{chat_id}")
+    public ListLinksResponse getAllLinks(@PathVariable("chat_id") long chatId) {
         log.info("Get all links for chat with id {}", chatId);
         return linkService.getAllLinks(chatId);
     }
 
-    @PostMapping
+    @PostMapping("/{chat_id}")
     public LinkResponse addLink(
-        @RequestHeader(TG_CHAT_ID_HEADER) long chatId,
+        @PathVariable("chat_id") long chatId,
         @RequestBody AddLinkRequest addLinkRequest
     ) {
         log.info("Add link to chat with id {}", chatId);
         return linkService.addLink(chatId, addLinkRequest);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{chat_id}")
     public LinkResponse removeLink(
-        @RequestHeader(TG_CHAT_ID_HEADER) long chatId,
+        @PathVariable("chat_id") long chatId,
         @RequestBody RemoveLinkRequest removeLinkRequest
     ) {
         log.info("Remove link from chat with id {}", chatId);

@@ -8,12 +8,6 @@ import edu.java.bot.service.ScrapperService;
 
 public class ScrapperClient extends AbstractWebClient<ScrapperService> {
 
-    private static final String BASE_URL = "http://localhost:8080/";
-
-    public ScrapperClient() {
-        this(BASE_URL);
-    }
-
     public ScrapperClient(String baseUrl) {
         super(baseUrl);
     }

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import static edu.java.bot.command.Command.UNTRACK;
+import static edu.java.bot.util.MessagesUtils.CHAT_DOESNT_EXIST;
 import static edu.java.bot.util.MessagesUtils.CHOOSE_LINK_TO_UNTRACK;
 import static edu.java.bot.util.MessagesUtils.NO_TRACKED_LINKS;
 
@@ -33,12 +34,16 @@ public class UntrackCommandExecutor implements CommandExecutor {
     }
 
     private SendMessage buildMessage(long chatId) {
-        ListLinksResponse listLinksResponse = scrapperClient.getAllTrackedLinks(chatId);
-        List<LinkResponse> links = listLinksResponse.links();
-        if (links.isEmpty()) {
-            return new SendMessage(chatId, NO_TRACKED_LINKS);
+        try {
+            ListLinksResponse listLinksResponse = scrapperClient.getAllTrackedLinks(chatId);
+            List<LinkResponse> links = listLinksResponse.links();
+            if (links.isEmpty()) {
+                return new SendMessage(chatId, NO_TRACKED_LINKS);
+            }
+            Keyboard keyboard = KeyboardBuilder.buildCallbackKeyboard(links);
+            return new SendMessage(chatId, CHOOSE_LINK_TO_UNTRACK).replyMarkup(keyboard);
+        } catch (Exception e) {
+            return new SendMessage(chatId, CHAT_DOESNT_EXIST);
         }
-        Keyboard keyboard = KeyboardBuilder.buildCallbackKeyboard(links);
-        return new SendMessage(chatId, CHOOSE_LINK_TO_UNTRACK).replyMarkup(keyboard);
     }
 }

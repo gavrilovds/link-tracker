@@ -11,13 +11,8 @@ import java.util.regex.Pattern;
 
 public class StackOverflowClient extends AbstractWebClient<StackOverflowService> implements LinkInformationProvider {
 
-    private static final String BASE_URL = "https://api.stackexchange.com/2.3/";
     private static final Pattern STACKOVERFLOW_LINK_PATTERN =
         Pattern.compile("https://stackoverflow.com/questions/(\\d+).*");
-
-    public StackOverflowClient() {
-        this(BASE_URL);
-    }
 
     public StackOverflowClient(String baseUrl) {
         super(baseUrl);

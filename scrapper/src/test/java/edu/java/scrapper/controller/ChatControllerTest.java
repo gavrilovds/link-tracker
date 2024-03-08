@@ -42,7 +42,7 @@ public class ChatControllerTest {
     @SneakyThrows
     @DisplayName("ChatController#registerChat with ChatAlreadyRegistered exception test")
     public void registerChat_shouldReturn409_whenChatIsAlreadyRegistered() {
-        Mockito.doThrow(ChatAlreadyRegisteredException.class).when(chatService).registerChat(CHAT_ID);
+        Mockito.doThrow(new ChatAlreadyRegisteredException(CHAT_ID)).when(chatService).registerChat(CHAT_ID);
 
         mvc.perform(post("/tg-chat/" + CHAT_ID))
             .andExpect(status().isConflict());

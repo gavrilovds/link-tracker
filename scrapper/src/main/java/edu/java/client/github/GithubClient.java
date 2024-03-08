@@ -11,12 +11,7 @@ import java.util.regex.Pattern;
 
 public class GithubClient extends AbstractWebClient<GithubService> implements LinkInformationProvider {
 
-    private static final String BASE_URL = "https://api.github.com/";
     private static final Pattern REPOSITORY_PATTERN = Pattern.compile("https://github.com/(.+)/(.+)");
-
-    public GithubClient() {
-        this(BASE_URL);
-    }
 
     public GithubClient(String baseUrl) {
         super(baseUrl);

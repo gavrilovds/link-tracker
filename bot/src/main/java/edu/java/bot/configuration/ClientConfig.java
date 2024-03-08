@@ -13,9 +13,9 @@ public class ClientConfig {
 
     @Bean
     public ScrapperClient scrapperClient() {
-        if (!scrapperBaseUrl.isEmpty()) {
-            return new ScrapperClient(scrapperBaseUrl);
+        if (scrapperBaseUrl.isEmpty()) {
+            throw new IllegalStateException("Не указан базовый url");
         }
-        return new ScrapperClient();
+        return new ScrapperClient(scrapperBaseUrl);
     }
 }

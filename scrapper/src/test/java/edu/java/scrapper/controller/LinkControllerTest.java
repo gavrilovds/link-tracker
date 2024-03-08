@@ -11,7 +11,6 @@ import edu.java.exception.LinkAlreadyTrackedException;
 import edu.java.exception.LinkNotFoundException;
 import edu.java.exception.UnsupportedLinkTypeException;
 import edu.java.service.LinkService;
-import java.net.URI;
 import java.util.List;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class LinkControllerTest {
 
     private static final long CHAT_ID = 1;
-
+    private static final String CHAT_ID_PATH = "/" + CHAT_ID;
     @MockBean
     private LinkService linkService;
     @Autowired
@@ -48,7 +47,7 @@ public class LinkControllerTest {
         Mockito.when(linkService.getAllLinks(CHAT_ID))
             .thenReturn(new ListLinksResponse(List.of(new LinkResponse(linkId, link))));
 
-        mvc.perform(get("/links").header("Tg-Chat-Id", CHAT_ID))
+        mvc.perform(get("/links" + CHAT_ID_PATH))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.links[0].id").value(linkId))
             .andExpect(jsonPath("$.links[0].url").value(link));
@@ -58,9 +57,9 @@ public class LinkControllerTest {
     @SneakyThrows
     @DisplayName("LinkController#getLinks with ChatNotFound exception test")
     public void getAllLinks_shouldReturn404_whenChatNotFound() {
-        Mockito.when(linkService.getAllLinks(CHAT_ID)).thenThrow(ChatNotFoundException.class);
+        Mockito.when(linkService.getAllLinks(CHAT_ID)).thenThrow(new ChatNotFoundException(CHAT_ID));
 
-        mvc.perform(get("/links").header("Tg-Chat-Id", CHAT_ID))
+        mvc.perform(get("/links" + CHAT_ID_PATH))
             .andExpect(status().isNotFound());
     }
 
@@ -73,8 +72,7 @@ public class LinkControllerTest {
         AddLinkRequest addLinkRequest = new AddLinkRequest(link);
         Mockito.when(linkService.addLink(CHAT_ID, addLinkRequest)).thenReturn(new LinkResponse(linkId, link));
 
-        mvc.perform(post("/links")
-                .header("Tg-Chat-id", CHAT_ID)
+        mvc.perform(post("/links" + CHAT_ID_PATH)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(addLinkRequest)))
             .andExpect(status().isOk())
@@ -86,10 +84,10 @@ public class LinkControllerTest {
     @SneakyThrows
     @DisplayName("LinkController#addLink with ChatNotFound exception test")
     public void addLink_shouldReturn404_whenChatNotFound() {
-        Mockito.when(linkService.addLink(CHAT_ID, new AddLinkRequest(null))).thenThrow(ChatNotFoundException.class);
+        Mockito.when(linkService.addLink(CHAT_ID, new AddLinkRequest(null)))
+            .thenThrow(new ChatNotFoundException(CHAT_ID));
 
-        mvc.perform(post("/links")
-                .header("Tg-Chat-Id", CHAT_ID)
+        mvc.perform(post("/links" + CHAT_ID_PATH)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(new AddLinkRequest(null))))
             .andExpect(status().isNotFound());
@@ -99,13 +97,13 @@ public class LinkControllerTest {
     @SneakyThrows
     @DisplayName("LinkController#addLink with LinkAlreadyTracked exception test")
     public void addLink_shouldReturn409_whenLinkAlreadyTracked() {
-        Mockito.when(linkService.addLink(CHAT_ID, new AddLinkRequest(null)))
-            .thenThrow(LinkAlreadyTrackedException.class);
+        AddLinkRequest request = new AddLinkRequest("test");
+        Mockito.when(linkService.addLink(CHAT_ID, request))
+            .thenThrow(new LinkAlreadyTrackedException(request));
 
-        mvc.perform(post("/links")
-                .header("Tg-Chat-Id", CHAT_ID)
+        mvc.perform(post("/links" + CHAT_ID_PATH)
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(new AddLinkRequest(null))))
+                .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isConflict());
     }
 
@@ -113,13 +111,13 @@ public class LinkControllerTest {
     @SneakyThrows
     @DisplayName("LinkController#addLink with UnsupportedLinkType exception test")
     public void addLink_shouldReturn422_whenLinkHasUnsupportedType() {
-        Mockito.when(linkService.addLink(CHAT_ID, new AddLinkRequest(null)))
-            .thenThrow(UnsupportedLinkTypeException.class);
+        AddLinkRequest request = new AddLinkRequest("test");
+        Mockito.when(linkService.addLink(CHAT_ID, request))
+            .thenThrow(new UnsupportedLinkTypeException(request));
 
-        mvc.perform(post("/links")
-                .header("Tg-Chat-Id", CHAT_ID)
+        mvc.perform(post("/links" + CHAT_ID_PATH)
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(new AddLinkRequest(null))))
+                .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isUnprocessableEntity());
     }
 
@@ -131,8 +129,7 @@ public class LinkControllerTest {
         LinkResponse response = new LinkResponse(linkId, "test.com");
         Mockito.when(linkService.removeLink(CHAT_ID, new RemoveLinkRequest(linkId))).thenReturn(response);
 
-        mvc.perform(delete("/links")
-                .header("Tg-Chat-Id", CHAT_ID)
+        mvc.perform(delete("/links" + CHAT_ID_PATH)
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(new RemoveLinkRequest(linkId))))
             .andExpect(status().isOk())
@@ -144,13 +141,13 @@ public class LinkControllerTest {
     @SneakyThrows
     @DisplayName("LinkController#removeLink with LinkNotFound exception test")
     public void removeLink_shouldReturn404_whenLinkIsNotFound() {
-        Mockito.when(linkService.removeLink(CHAT_ID, new RemoveLinkRequest(0)))
-            .thenThrow(LinkNotFoundException.class);
+        RemoveLinkRequest request = new RemoveLinkRequest(0);
+        Mockito.when(linkService.removeLink(CHAT_ID, request))
+            .thenThrow(new LinkNotFoundException(request));
 
-        mvc.perform(delete("/links")
-                .header("Tg-Chat-Id", CHAT_ID)
+        mvc.perform(delete("/links" + CHAT_ID_PATH)
                 .contentType("application/json")
-                .content(objectMapper.writeValueAsString(new RemoveLinkRequest(0))))
+                .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isNotFound());
     }
 }

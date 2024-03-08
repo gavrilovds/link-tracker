@@ -23,6 +23,7 @@ public class UntrackCommandExecutorTest {
 
     @Mock
     private ScrapperClient scrapperClient;
+
     @InjectMocks
     private UntrackCommandExecutor commandExecutor;
 
