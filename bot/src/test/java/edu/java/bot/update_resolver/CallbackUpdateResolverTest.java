@@ -3,8 +3,8 @@ package edu.java.bot.update_resolver;
 import com.google.gson.Gson;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import edu.java.bot.service.LinkService;
-import java.util.UUID;
+import edu.java.bot.client.ScrapperClient;
+import edu.java.bot.dto.RemoveLinkRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +23,7 @@ public class CallbackUpdateResolverTest {
     private final Gson gson = new Gson();
 
     @Mock
-    private LinkService linkService;
+    private ScrapperClient scrapperClient;
 
     @InjectMocks
     private CallbackUpdateResolver callbackUpdateResolver;
@@ -32,12 +32,12 @@ public class CallbackUpdateResolverTest {
     @DisplayName("CallbackUpdateResolver#resolve with valid Callback test")
     public void resolve_shouldReturnCorrectSendMessage_whenCallBackIsValid() {
         long chatId = 123456789L;
-        UUID linkId = UUID.randomUUID();
+        long linkId = 2;
         Update update = getValidUpdate(chatId, String.valueOf(linkId));
 
         SendMessage result = callbackUpdateResolver.resolve(update);
 
-        Mockito.verify(linkService, times(1)).untrackLink(chatId, linkId);
+        Mockito.verify(scrapperClient, times(1)).untrackLink(chatId, new RemoveLinkRequest(linkId));
         assertThat(result.getParameters().get("chat_id")).isEqualTo(chatId);
         assertThat(result.getParameters().get("text")).isEqualTo(LINK_HAS_BEEN_UNTRACKED);
     }
