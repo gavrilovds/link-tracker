@@ -3,14 +3,14 @@ package edu.java.bot.util;
 import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
 import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.model.request.Keyboard;
-import edu.java.bot.dto.Link;
+import edu.java.bot.dto.LinkResponse;
 import java.util.List;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
 public class KeyboardBuilder {
 
-    public static Keyboard buildUrlKeyboard(List<Link> links) {
+    public static Keyboard buildUrlKeyboard(List<LinkResponse> links) {
         return new InlineKeyboardMarkup(
             links.stream()
                 .map(link -> new InlineKeyboardButton(link.link()).url(link.link()))
@@ -19,7 +19,7 @@ public class KeyboardBuilder {
         );
     }
 
-    public static Keyboard buildCallbackKeyboard(List<Link> links) {
+    public static Keyboard buildCallbackKeyboard(List<LinkResponse> links) {
         return new InlineKeyboardMarkup(
             links.stream()
                 .map(link -> new InlineKeyboardButton(link.link()).callbackData("/untrack:" + link.linkId()))

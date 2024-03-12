@@ -41,4 +41,8 @@ public class MessagesUtils {
     public static final String HTTP_PREFIX = "http://";
     public static final String LINK_SHOULD_STARTS_WITH_HTTP =
         "Ссылка должна начинаться с " + HTTPS_PREFIX + " или " + HTTP_PREFIX + "❗";
+    public static final String CHAT_DOESNT_EXIST = "Чат с id = %d не зарегистрирован";
+    public static final String CHAT_ALREADY_EXIST = "Чат уже зарегистрирован";
+    public static final String TRACK_ERROR = "Ошибка при попытке добавить ссылку в отслеживаемые";
+    public static final String UNTRACK_ERROR = "Ошибка при попытке удалить ссылку из отслеживаемых";
 }

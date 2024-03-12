@@ -12,7 +12,7 @@ public class LinkInformationReceiverManagerTest {
 
     @Test
     public void getReceiver_shouldReturnCorrectReceiver() {
-        LinkInformationProvider test = new GithubClient();
+        LinkInformationProvider test = new GithubClient("test");
         LinkInformationReceiverManager manager = new LinkInformationReceiverManager(List.of(test));
 
         LinkInformationProvider actual = manager.getReceiver(LinkType.GITHUB).get();
