@@ -13,6 +13,9 @@ client:
 spring:
   application:
     name: scrapper
+  datasource:
+    username: postgres
+    password: postgres
 
 server:
   port: 8080
