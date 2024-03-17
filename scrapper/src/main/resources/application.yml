@@ -8,6 +8,7 @@ client:
   stackoverflow:
     base-url: https://api.stackexchange.com/2.3/
   github:
+    authorization-token: #YOUR TOKEN
     base-url: https://api.github.com/
   bot:
     base-url: http://localhost:8090/
@@ -27,6 +28,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/scrapper
     username: postgres
     password: postgres
+    driver-class-name: org.postgresql.Driver
 
 server:
   port: 8080
