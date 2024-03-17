@@ -3,7 +3,7 @@ package edu.java.scrapper.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.java.controller.ChatController;
 import edu.java.exception.ChatAlreadyRegisteredException;
-import edu.java.service.ChatService;
+import edu.java.service.chat.ChatService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
