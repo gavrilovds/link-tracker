@@ -8,6 +8,8 @@ client:
 spring:
   application:
     name: bot
+  liquibase:
+    enabled: false
   jackson:
     time-zone: UTC
 

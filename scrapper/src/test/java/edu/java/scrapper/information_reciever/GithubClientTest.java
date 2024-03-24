@@ -5,6 +5,7 @@ import edu.java.client.github.GithubClient;
 import edu.java.client.link.LastUpdateTime;
 import edu.java.client.link.LinkInformationProvider;
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,7 @@ public class GithubClientTest {
     @Test
     @DisplayName("GithubClient#receiveLastUpdateTime test")
     public void receiveLastUpdateTime_shouldReturnCorrectResponse() {
-        LinkInformationProvider client = new GithubClient(wireMockServer.baseUrl());
+        LinkInformationProvider client = new GithubClient(wireMockServer.baseUrl(), Collections.emptyMap());
 
         LastUpdateTime actual = client.receiveLastUpdateTime("https://github.com/gavrilovds/link-tracker");
 
