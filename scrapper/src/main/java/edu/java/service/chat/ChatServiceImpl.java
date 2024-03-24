@@ -3,10 +3,8 @@ package edu.java.service.chat;
 import edu.java.exception.ChatAlreadyRegisteredException;
 import edu.java.repository.chat.ChatRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService {
 

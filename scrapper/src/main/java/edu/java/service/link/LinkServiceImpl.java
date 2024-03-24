@@ -13,10 +13,8 @@ import edu.java.repository.chat_link.ChatLinkRepository;
 import edu.java.repository.link.LinkRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @RequiredArgsConstructor
 public class LinkServiceImpl implements LinkService {
 

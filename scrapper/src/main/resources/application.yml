@@ -3,7 +3,7 @@ app:
     enable: true
     interval: 10000
     force-check-delay: 10000
-
+  database-access-type: jdbc
 client:
   stackoverflow:
     base-url: https://api.stackexchange.com/2.3/
